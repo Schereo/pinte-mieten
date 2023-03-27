@@ -1,0 +1,1 @@
+export const apiUrl = process.env.NODE_ENV === "production" ? "https://us-central1-pinte-mieten.cloudfunctions.net" : "http://127.0.0.1:5001/pinte-mieten/us-central1/";

@@ -1,9 +1,12 @@
+import axios from 'axios';
 import { useState } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { apiUrl } from '../lib/config';
 
 export function Home() {
     const [recaptcha, setRecaptcha] = useState(false);
-
+    const [errorMessage, setErrorMessage] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     function onCaptchaChanged(value: any) {
         console.log('Captcha value:', value);
@@ -11,9 +14,28 @@ export function Home() {
     }
     async function sendMail(event: any) {
         event.preventDefault();
-        console.log(event.target);
-        const data = new FormData(event.target);
-        console.log(data);
+        try {
+            setErrorMessage('');
+            if (!recaptcha) {
+                setErrorMessage('Bitte bestätige, dass du kein Roboter bist');
+                return;
+            }
+            const formData = new FormData(event.target);
+            const object: any = {};
+            formData.forEach((value, key) => (object[key] = value));
+            console.log(object);
+            const { name, email, date, house, room } = object;
+            if (!name || !email || !date || !house || !room) {
+                setErrorMessage('Bitte fülle alle Felder aus.');
+                return;
+            }
+            const response = await axios.post(`${apiUrl}reserve`, object);
+            console.log(response);
+            setSuccessMessage('Deine Anfrage wurde erfolgreich versendet.');
+        } catch (error: unknown) {
+            console.error(error);
+            setErrorMessage('Es ist ein Fehler aufgetreten.');
+        }
     }
     return (
         <div>
@@ -46,33 +68,48 @@ export function Home() {
                 <li>Bierzeltgarnitur, Sofas, Stühle, Kicker und Dartpfeile können auch genutzt werden</li>
             </ul>
             <iframe
+                title="calendar"
                 src="https://calendar.google.com/calendar/embed?src=39a1cc5eb39734fd980f23bc7b6e3ce8c62fd63ae89acb1c0cf6148ce694f7a8%40group.calendar.google.com&ctz=Europe%2FBerlin"
                 style={{ border: '0', width: '100vw', height: '500px' }}
             ></iframe>
-            <form onSubmit={sendMail} style={{ display: 'flex', flexDirection: 'column' }}>
+            <form onSubmit={sendMail} style={{ display: 'flex', flexDirection: 'column', gap: "10px" ,margin: "20px 5px" }}>
                 <label>
-                    Name:
+                    Vor- und Nachname*:
                     <input type="text" name="name" />
                 </label>
                 <label>
-                    Email:
+                    E-Mail*:
                     <input type="text" name="email" />
                 </label>
                 <label>
-                    Datum:
+                    WhatsApp Nummer:
+                    <input type="text" name="phone" />
+                </label>
+                <label>
+                    Datum*:
                     <input type="text" name="date" />
                 </label>
                 <label>
-                    Haus & Zimmernummer:
+                    Haus*
                     <input type="text" name="house" />
                 </label>
                 <label>
-                    Sonstige Anmerkungen:
-                    <input type="textarea" name="notes" />
+                    Zimmernummer*
+                    <input type="text" name="room" />
                 </label>
+                <label>
+                    Sonstige Anmerkungen:
+                    <input type="textarea" name="message" />
+                </label>
+                <ReCAPTCHA
+                    style={{ display: 'block' }}
+                    sitekey="6LfCYy8lAAAAAOWogJjPr0NYI1JQmqzAYJrfuLma"
+                    onChange={onCaptchaChanged}
+                />
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
                 <input type="submit" value="Submit" />
             </form>
-            <ReCAPTCHA sitekey="Your client site key" onChange={onCaptchaChanged} />
         </div>
     );
 }
