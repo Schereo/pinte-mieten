@@ -19,7 +19,7 @@ export function Rental() {
             </div>
             <div className="bg-white shadow-md rounded md:px-8 px-4 pt-6 pb-8 md:m-4 m-1">
                 <h2 className="text-2xl font-bold">How to Mieten</h2>
-                <ol className="text-lg list-decimal  m-3 md:m-10">
+                <ol className="text-lg list-decimal  m-5 md:m-10">
                     <li>Lies die Mietbedingungen 🔖</li>
                     <li>Überprüfe im Kalender, ob dein Wunschdatum noch frei ist 🔎</li>
                     <li>Fülle das Formular aus und sende es ab ✍️</li>

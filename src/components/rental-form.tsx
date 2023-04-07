@@ -56,7 +56,7 @@ export function RentalForm({sendMail}: RentalFormProps) {
                 className="bg-white shadow-md rounded md:px-8 px-4 pt-6 pb-8 md:m-4 m-1"
             >
                 <div>
-                    <label htmlFor="name">Vor- und Nachname*:</label>
+                    <label htmlFor="name">Vor- und Nachname*</label>
                     <input
                         id="name"
                         type="text"
@@ -65,7 +65,7 @@ export function RentalForm({sendMail}: RentalFormProps) {
                     />
                 </div>
                 <label>
-                    E-Mail*:
+                    E-Mail*
                     <input
                         type="text"
                         name="email"
@@ -73,7 +73,7 @@ export function RentalForm({sendMail}: RentalFormProps) {
                     />
                 </label>
                 <label>
-                    WhatsApp Nummer:
+                    WhatsApp Nummer
                     <input
                         type="text"
                         name="phone"
@@ -81,13 +81,13 @@ export function RentalForm({sendMail}: RentalFormProps) {
                     />
                 </label>
                 <label>
-                    Datum*:
+                    Datum*
                     <input
                         type="date"
                         name="date"
                         className="w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-600"
                     />
-                </label>
+                </label> <br/>
                 <label>
                     Haus*
                     <select name='house' defaultValue="DEFAULT" className="w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-600">
@@ -119,7 +119,7 @@ export function RentalForm({sendMail}: RentalFormProps) {
                     </select>
                 </label>
                 <label>
-                    Sonstige Anmerkungen:
+                    Sonstige Anmerkungen
                     <input
                         type="textarea"
                         name="message"
