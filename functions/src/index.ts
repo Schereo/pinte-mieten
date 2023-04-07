@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import {RentalRequest} from "./models/rentalRequest";
-import {sendMail} from "./services/mailer";
+import {sendConfirmation, sendRentalRequest} from "./services/mailer";
 import * as cors from "cors";
 
 // // Start writing functions
@@ -12,18 +12,28 @@ import * as cors from "cors";
 // });
 
 export const reserve = functions.https.onRequest((request, response) => {
-  cors({origin: true})(request, response, () => {
+  cors()(request, response, async () => {
     try {
       const rentalRequest = request.body as RentalRequest;
       const {name, email, date, house} = rentalRequest;
       if (!name || !email || !date || !house) {
-        response.status(400).send("Bad Request");
+        response.status(400).send();
         return;
       }
-      sendMail(rentalRequest);
-      response.status(200).send("OK");
+      const emailResponse = await Promise.allSettled([
+        sendRentalRequest(rentalRequest),
+        sendConfirmation(rentalRequest),
+      ]);
+      if (emailResponse.some((result) => result.status === "rejected")) {
+        response.status(500).send();
+        console.error(emailResponse);
+        return;
+      }
+
+      response.status(200).send();
     } catch (error: unknown) {
-      response.status(500).send("Error");
+      console.error(error);
+      response.status(500).send();
     }
   });
 });

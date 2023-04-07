@@ -3,7 +3,10 @@ export interface RentalRequest {
     email: string;
     phone: string;
     date: string;
+    cleaning: Cleaning;
     room: string;
     house: string;
     message: string;
 }
+
+export type Cleaning = "without" | "30" | "50";

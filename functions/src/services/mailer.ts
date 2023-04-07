@@ -1,5 +1,7 @@
 import {createTransport} from "nodemailer";
 import {RentalRequest} from "../models/rentalRequest";
+import {MailTemplate, generateEmail} from "./mail-template";
+import {parseRequestText} from "../helper/textParser";
 
 /**
  * Gets the transporter for sending mails
@@ -17,21 +19,57 @@ function getTransporter() {
   });
 }
 
-export const sendMail = (rentalRequest: RentalRequest) => {
-  console.log(rentalRequest);
+/**
+ * Sends the rental request to the pinten team
+ * @param rentalRequest
+ * @return Promise
+ */
+export function sendRentalRequest(rentalRequest: RentalRequest) {
   const transporter = getTransporter();
-  const {name, date, email, house, message, phone} = rentalRequest;
+  const {name, date} = rentalRequest;
+  const mail: MailTemplate = {
+    title: "Mietanfrage Pinte 42",
+    heading: "Pinte Mieten",
+    receiver: "Pinten Team",
+    text: `folgende Mietanfrage ist eingegangen:
+      ${parseRequestText(rentalRequest)}`,
+  };
   const mailOptions = {
-    from: email,
+    from: "pinte42ol@gmail.com",
     to: "tim.sigl@hotmail.de",
-    subject: `${name} Mietanfrage Pinte 42`,
-    text: `${name} möchte die Pinte am ${date} mieten.
-                Name: ${name},
-                Email: ${email},
-                Telefon: ${phone || "Keine Angabe"},
-                Haus: ${house},
-                Nachricht: ${message || "Keine Angabe"}
-                `,
+    subject: `Mietanfrage Pinte 42 von ${name}`,
+    text: `${name} möchte die Pinte am ${date} mieten. <br> ${parseRequestText(rentalRequest)}`,
+    html: generateEmail(mail),
   };
   return transporter.sendMail(mailOptions);
-};
+}
+
+/**
+ * Sends a confirmation mail to the user
+ * @param rentalRequest
+ * @return Promise
+ */
+export function sendConfirmation(rentalRequest: RentalRequest) {
+  const transporter = getTransporter();
+  const {name, email} = rentalRequest;
+  const mail: MailTemplate = {
+    title: "Mietanfrage Pinte 42",
+    heading: "Pinte Mieten",
+    receiver: name,
+    text: `wir haben deine Mietanfrage erhalten und werden uns schnellstmöglich bei dir melden.
+        Mietanfrage:
+        ${parseRequestText(rentalRequest)}`,
+  };
+  const mailOptions = {
+    from: "pinte42ol@gmail.com",
+    to: email,
+    subject: "Mietanfrage Pinte 42",
+    text: `Hallo ${name},
+                wir haben deine Mietanfrage erhalten und werden uns schnellstmöglich bei dir melden.
+                Mietanfrage:
+                ${parseRequestText(rentalRequest)}
+                Dein Pinten Team`,
+    html: generateEmail(mail),
+  };
+  return transporter.sendMail(mailOptions);
+}
