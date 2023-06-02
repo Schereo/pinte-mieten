@@ -4,7 +4,7 @@ export function Conditions() {
             <h2 className="text-2xl font-bold">Mietbedingungen</h2>
             <ul className="list-disc  m-3 md:m-10">
                 <li>Vermietung ausschließlich an <b>Bewohner:innen</b> des Wohnheims Schützenweg 42</li>
-                <li>Die <b>Schlüsselübergabe</b> ist Samstags um 12:00 Uhr bis Sonntags um 12:00 Uhr (nach Absprache)</li>
+                <li>Die <b>Schlüsselübergabe</b> ist Samstags um 14:00 Uhr bis Sonntags um 12:00 Uhr (nach Absprache)</li>
                 <li>
                     Die Veranstaltung darf maximal <b>bis 0:30 Uhr</b> wegen des Lärms für die Anwohner gehen (einfach die
                     Party schon um 17 Uhr beginnen, dann passt 0:30 Uhr auch)

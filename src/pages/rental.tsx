@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { Conditions } from '../components/conditions';
-import { Image } from '../components/image';
 import { apiUrl } from '../lib/config';
-import logo from '../assets/pinte_logo.png';
 import { RentalForm } from '../components/rental-form';
 
 export function Rental() {
@@ -13,10 +11,6 @@ export function Rental() {
 
     return (
         <div className="flex flex-col">
-            <div className="flex justify-between items-center  bg-white shadow-md rounded md:px-8 px-4 pt-6 pb-8 md:m-4 m-1">
-                <h1 className="text-4xl font-bold">Pinte Mieten</h1>
-                <Image src={logo} alt="Pinte Logo" />
-            </div>
             <div className="bg-white shadow-md rounded md:px-8 px-4 pt-6 pb-8 md:m-4 m-1">
                 <h2 className="text-2xl font-bold">How to Mieten</h2>
                 <ol className="text-lg list-decimal  m-5 md:m-10">
