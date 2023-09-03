@@ -9,10 +9,10 @@ function parseCleaning(cleaning: Cleaning) {
   switch (cleaning) {
   case "without":
     return "ohne Putzen";
-  case "30":
-    return "30€ Putzen";
-  case "50":
+  case "small":
     return "50€ Putzen";
+  case "large":
+    return "90€ Putzen";
   }
 }
 

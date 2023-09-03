@@ -9,4 +9,4 @@ export interface RentalRequest {
     message: string;
 }
 
-export type Cleaning = "without" | "30" | "50";
+export type Cleaning = "without" | "small" | "large";

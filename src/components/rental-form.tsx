@@ -121,8 +121,8 @@ export function RentalForm({ sendMail }: RentalFormProps) {
                         Wähle die Putzoption
                     </option>
                     <option value="without">Ohne Putzen - kostenlos</option>
-                    <option value="30">Kleines Putzen - 30€</option>
-                    <option value="50">Großen Putzen - 50€</option>
+                    <option value="small">Kleines Putzen - 50€</option>
+                    <option value="large">Großen Putzen - 90€</option>
                 </select>
             </label>
             <label>
