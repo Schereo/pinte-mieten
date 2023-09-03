@@ -1,8 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { get } from "http";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,5 +17,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);
+
+
+
+export function login(email: string, password: string) {
+    return signInWithEmailAndPassword(auth, email, password);
+}
+
+export function parseAuthError(error: any) {
+  if (!error.code) {
+    return "Unbekannter Fehler";
+  }
+  switch (error.code) {
+    case "auth/invalid-email":
+      return "Ungültige E-Mail-Adresse";
+    case "auth/user-disabled":
+      return "Benutzerkonto wurde deaktiviert";
+    case "auth/user-not-found":
+      return "Benutzerkonto nicht gefunden";
+    case "auth/wrong-password":
+      return "Falsches Passwort";
+  }
+  return "Unbekannter Fehler";
+}
 
 export default app;
