@@ -26,8 +26,8 @@ export function RentalForm({ sendMail }: RentalFormProps) {
             const formValues: any = {};
             formData.forEach((value, key) => (formValues[key] = value));
             console.log(formValues);
-            const { name, email, date, house, room, cleaning, dateCheck } = formValues;
-            if (!name || !email || !date || !house || !room || !cleaning) {
+            const { name, email, rentalDate, house, room, cleaning, dateCheck } = formValues;
+            if (!name || !email || !rentalDate || !house || !room || !cleaning) {
                 setErrorMessage('Bitte fülle alle Felder aus.');
                 return;
             }
@@ -82,7 +82,7 @@ export function RentalForm({ sendMail }: RentalFormProps) {
                 Datum*
                 <input
                     type="date"
-                    name="date"
+                    name="rentalDate"
                     className="w-full p-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-600"
                 />
             </label>{' '}

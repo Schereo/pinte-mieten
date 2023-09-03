@@ -1,6 +1,6 @@
 import {createTransport} from "nodemailer";
 import {RentalRequest} from "../models/rentalRequest";
-import {MailTemplate, generateEmail} from "./mail-template";
+import {MailTemplate, generateEmail} from "./mailTemplate";
 import {parseRequestText} from "../helper/textParser";
 
 /**
@@ -26,7 +26,7 @@ function getTransporter() {
  */
 export function sendRentalRequest(rentalRequest: RentalRequest) {
   const transporter = getTransporter();
-  const {name, date} = rentalRequest;
+  const {name, rentalDate} = rentalRequest;
   const mail: MailTemplate = {
     title: "Mietanfrage Pinte 42",
     heading: "Pinte Mieten",
@@ -38,7 +38,7 @@ export function sendRentalRequest(rentalRequest: RentalRequest) {
     from: "pinte42ol@gmail.com",
     to: "tim.sigl@hotmail.de",
     subject: `Mietanfrage Pinte 42 von ${name}`,
-    text: `${name} möchte die Pinte am ${date} mieten. <br> ${parseRequestText(rentalRequest)}`,
+    text: `${name} möchte die Pinte am ${rentalDate} mieten. <br> ${parseRequestText(rentalRequest)}`,
     html: generateEmail(mail),
   };
   return transporter.sendMail(mailOptions);
